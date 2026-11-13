@@ -1,0 +1,35 @@
+.search-page { max-width: 1000px; margin: 0 auto; padding: 24px 16px; font-family: system-ui, sans-serif; }
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+  background: #f4f6fa;
+  padding: 16px;
+  border-radius: 10px;
+}
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field.wide { grid-column: 1 / -1; }
+label { font-size: 0.8rem; font-weight: 600; color: #444; }
+input, select { padding: 8px; border: 1px solid #c5cad3; border-radius: 6px; font-size: 0.95rem; }
+
+.btn-reset { padding: 9px; border: 1px solid #999; background: white; border-radius: 6px; cursor: pointer; }
+
+.results { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; margin-top: 16px; }
+.card { border: 1px solid #dde1e8; border-radius: 10px; padding: 16px; background: white; }
+.card-head { display: flex; justify-content: space-between; align-items: center; }
+.card h3 { margin: 0; font-size: 1.05rem; }
+.badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 12px; background: #e3e8f0; text-transform: capitalize; }
+.badge.alumni { background: #d6f0dd; }
+.industry { color: #2a5db0; font-weight: 600; margin: 6px 0; }
+.bio, .schedule { font-size: 0.9rem; color: #555; }
+.btn-connect { margin-top: 8px; padding: 8px 14px; border: 0; background: #2a5db0; color: white; border-radius: 6px; cursor: pointer; }
+
+.pager { display: flex; justify-content: center; gap: 6px; margin-top: 24px; }
+.pager button { padding: 8px 12px; border: 1px solid #c5cad3; background: white; border-radius: 6px; cursor: pointer; }
+.pager button.active { background: #2a5db0; color: white; border-color: #2a5db0; }
+.pager button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.info { color: #666; }
+.error { color: #b00020; font-weight: 600; }

@@ -1,0 +1,118 @@
+<section class="search-page">
+  <h2>Find a Mentor or Mentee</h2>
+
+  <!-- ===== Advanced search form ===== -->
+  <form [formGroup]="form" class="search-form">
+    <div class="field wide">
+      <label for="q">Keyword</label>
+      <input id="q" type="text" formControlName="q" placeholder="Name, industry or skill..." />
+    </div>
+
+    <div class="field">
+      <label for="role">Role</label>
+      <select id="role" formControlName="role">
+        <option value="">All roles</option>
+        @for (r of filters().roles; track r) {
+          <option [value]="r">{{ r }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="industry">Industry</label>
+      <select id="industry" formControlName="industry">
+        <option value="">All industries</option>
+        @for (i of filters().industries; track i) {
+          <option [value]="i">{{ i }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="day">Available day</label>
+      <select id="day" formControlName="day">
+        <option value="">Any day</option>
+        @for (d of filters().days; track d) {
+          <option [value]="d">{{ d }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="timeSlot">Time of day</label>
+      <select id="timeSlot" formControlName="timeSlot">
+        <option value="">Any time</option>
+        @for (t of filters().timeSlots; track t) {
+          <option [value]="t">{{ t }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="sort">Sort by</label>
+      <select id="sort" formControlName="sort">
+        <option value="relevance">Most Relevant</option>
+        <option value="name">Name (A–Z)</option>
+        <option value="newest">Newest</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="limit">Per page</label>
+      <select id="limit" formControlName="limit">
+        <option [ngValue]="6">6</option>
+        <option [ngValue]="12">12</option>
+        <option [ngValue]="24">24</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn-reset" (click)="resetFilters()">Reset</button>
+  </form>
+
+  <!-- ===== Status ===== -->
+  @if (error()) { <p class="error">{{ error() }}</p> }
+  @if (loading()) { <p class="info">Searching...</p> }
+
+  <p class="info">{{ pagination().total }} result(s) found</p>
+
+  <!-- ===== Results ===== -->
+  <div class="results">
+    @for (u of results(); track u.id) {
+      <article class="card">
+        <div class="card-head">
+          <h3>{{ u.name }}</h3>
+          <span class="badge" [class.alumni]="u.role === 'alumni'">{{ u.role }}</span>
+        </div>
+        <p class="industry">{{ u.industry }}</p>
+        <p class="bio">{{ u.bio }}</p>
+        @if (u.schedule) {
+          <p class="schedule"><strong>Available:</strong> {{ u.schedule }}</p>
+        }
+        <!-- Student 3 will plug the Connect button in here -->
+        <button class="btn-connect" type="button">Connect</button>
+      </article>
+    } @empty {
+      @if (!loading()) { <p class="info">No users match your filters.</p> }
+    }
+  </div>
+
+  <!-- ===== Pagination controls ===== -->
+  @if (pagination().totalPages > 1) {
+    <nav class="pager">
+      <button type="button" (click)="goToPage(pagination().page - 1)" [disabled]="pagination().page === 1">
+        ‹ Prev
+      </button>
+
+      @for (p of pageNumbers(); track p) {
+        <button type="button" [class.active]="p === pagination().page" (click)="goToPage(p)">
+          {{ p }}
+        </button>
+      }
+
+      <button type="button" (click)="goToPage(pagination().page + 1)"
+              [disabled]="pagination().page === pagination().totalPages">
+        Next ›
+      </button>
+    </nav>
+  }
+</section>
